@@ -1,0 +1,159 @@
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrains Mono", "Font Awesome 6 Free", "Noto Color Emoji";
+    font-size: 11px;
+    font-weight: 600;
+    min-height: 0;
+}
+
+window#waybar {
+    background: alpha(#@BG@, 0.88);
+    color: #@TXT@;
+    border-radius: 12px;
+    border: 1px solid alpha(#@ACC@, 0.35);
+}
+
+#workspaces {
+    background: #@SURF@;
+    margin: 5px 4px;
+    padding: 0px 4px;
+    border-radius: 10px;
+}
+
+#workspaces button {
+    padding: 2px 10px;
+    margin: 3px 1px;
+    border-radius: 8px;
+    color: alpha(#@MUT@, 0.55);
+    background: transparent;
+    transition: all 0.25s ease;
+}
+
+#workspaces button.active {
+    color: #@BG@;
+    background: #@ACC@;
+    font-weight: 700;
+}
+
+#workspaces button.urgent {
+    color: #@BG@;
+    background: #@URG@;
+    font-weight: 700;
+}
+
+#workspaces button:hover {
+    color: #@TXT@;
+    background: alpha(#@TXT@, 0.08);
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#custom-launcher,
+#pulseaudio,
+#memory,
+#cpu,
+#tray,
+#clock,
+#custom-power {
+    background: #@SURF@;
+    margin: 5px 3px;
+    padding: 2px 14px;
+    border-radius: 10px;
+}
+
+#custom-launcher {
+    background-color: #@SURF@;
+    color: #@ACC@;
+    margin-left: 5px;
+}
+
+#custom-media {
+    background-color: alpha(#@URG@, 0.15);
+    color: #@URG@;
+}
+
+#custom-media:hover {
+    background-color: alpha(#@URG@, 0.35);
+}
+
+#custom-sys {
+    background-color: #@SURF@;
+    color: #@TXT@;
+}
+
+#custom-sys:hover {
+    background-color: #@MUT@;
+}
+
+#custom-sys.hot {
+    background-color: alpha(#@URG@, 0.15);
+    color: #@URG@;
+}
+
+#network {
+    background-color: alpha(#@ACC2@, 0.15);
+    color: #@ACC2@;
+}
+
+#network:hover {
+    background-color: alpha(#@ACC2@, 0.35);
+}
+
+#custom-launcher:hover {
+    background-color: #@MUT@;
+}
+
+#clock {
+    color: #@TXT@;
+    background-color: #@BG@;
+    font-weight: 700;
+}
+
+#pulseaudio {
+    background-color: alpha(#@URG@, 0.15);
+    color: #@URG@;
+}
+
+#pulseaudio:hover {
+    background-color: alpha(#@URG@, 0.35);
+}
+
+#memory {
+    background-color: alpha(#@ACC2@, 0.15);
+    color: #@ACC2@;
+}
+
+#memory:hover {
+    background-color: alpha(#@ACC2@, 0.35);
+}
+
+#cpu {
+    background-color: alpha(#@ACC@, 0.18);
+    color: #@ACC@;
+}
+
+#cpu:hover {
+    background-color: alpha(#@ACC@, 0.38);
+}
+
+#tray {
+    background-color: #@SURF@;
+    color: #@TXT@;
+}
+
+#custom-power {
+    background-color: alpha(#@ACC@, 0.15);
+    color: #@ACC@;
+    margin-right: 5px;
+}
+
+#custom-power:hover {
+    background-color: alpha(#@ACC@, 0.40);
+}
+
+tooltip {
+    background: #@SURF@;
+    border: 1px solid #@ACC@;
+    border-radius: 10px;
+}

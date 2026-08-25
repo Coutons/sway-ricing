@@ -1,0 +1,88 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 36,
+  "margin-top": 4,
+  "margin-left": 10,
+  "margin-right": 10,
+  "exclusive": true,
+
+  "modules-left": ["custom/launcher", "sway/workspaces", "custom/media"],
+  "modules-center": ["clock#date", "clock#time"],
+  "modules-right": ["pulseaudio", "custom/sys", "network", "tray", "custom/power"],
+
+  "custom/media": {
+    "interval": 2,
+    "return-type": "json",
+    "exec": "~/.config/waybar/scripts/media.sh",
+    "on-click": "playerctl play-pause",
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous",
+    "tooltip": false
+  },
+
+    "custom/sys": {
+    "interval": 3,
+    "return-type": "json",
+    "exec": "~/.config/waybar/scripts/sysinfo.sh",
+    "on-click": "swaymsg exec \"kitty --override initial_window_state=maximized -e btop\"",
+    "tooltip": false
+  },
+
+  "custom/launcher": {
+    "format": "<span font_family='Font Awesome 6 Brands' size='12pt'>\uf798</span>",
+    "on-click": "wofi --show drun",
+    "tooltip": false
+  },
+
+  "sway/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "format": "{name}",
+    "persistent_workspaces": {}
+  },
+
+  "clock#date": {
+    "format": "<span font_family='Font Awesome 6 Free Regular' size='8pt'>\uf073</span> <span size='small'>{:%a %d %b}</span>",
+    "interval": 10,
+    "tooltip": false
+  },
+
+  "clock#time": {
+    "format": "<span font_family='Font Awesome 6 Free Solid' size='8pt'>\uf017</span> <span weight='bold'>{:%H:%M}</span>",
+    "interval": 1,
+    "tooltip": false
+  },
+
+  "network": {
+    "interval": 3,
+    "format-wifi": "<span font_family='Font Awesome 6 Free Solid' size='9pt'>\uf1eb</span>  {essid}",
+    "format-ethernet": "<span font_family='Font Awesome 6 Free Solid' size='9pt'>\uf796</span>  wired",
+    "format-disconnected": "<span font_family='Font Awesome 6 Free Solid' size='9pt'>\uf1eb</span>  offline",
+    "on-click": "nm-connection-editor",
+    "tooltip": false
+  },
+
+  "pulseaudio": {
+    "format": "<span font_family='Font Awesome 6 Free Solid' size='9pt'>{icon}</span>  {volume}%",
+    "format-muted": "<span font_family='Font Awesome 6 Free Solid' size='9pt'>\uf1f7</span>  muted",
+    "format-icons": {
+      "default": ["\uf027", "\uf028"]
+    },
+    "on-click": "pavucontrol",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
+    "tooltip": false
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 8
+  },
+
+  "custom/power": {
+    "format": "<span font_family='Font Awesome 6 Free Solid' size='11pt'>\uf011</span>",
+    "on-click": "~/.config/sway/powermenu.sh",
+    "tooltip": false
+  }
+}
