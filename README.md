@@ -68,6 +68,10 @@ grim -g "$(slurp)" ~/dotfiles/screenshot.png
 cd ~/dotfiles && git add screenshot.png && git commit -m "docs: update screenshot"
 ```
 
+## Fastfetch
+
+![Fastfetch](fastfetch.png)
+
 ## Notes
 
 These are pure **dotfiles**. Some things are system-level and are **not**
