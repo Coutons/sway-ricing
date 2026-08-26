@@ -1,0 +1,9 @@
+#!/bin/bash
+options=" Audio\n Network\n Wallpaper\n Screenshot"
+chosen=$(echo -e "$options" | wofi --dmenu -i -p "Options")
+case "$chosen" in
+  *Audio) pavucontrol ;;
+  *Network) nm-connection-editor ;;
+  *Wallpaper) ~/.config/waybar/scripts/change-wall ;;
+  *Screenshot) flameshot gui ;;
+esac

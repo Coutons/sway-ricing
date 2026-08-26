@@ -1,88 +1,256 @@
+//* ------- 💫 https://www.youtube.com/@Ruben-Linux 💫 ---------- */
+//* ........ Waybar configuration for Arch Linux simple ....... */
+//* ---------- 👍 designed by: Ruben_&_Linux:~ 2025 👍 ------- */
+
 {
-  "layer": "top",
-  "position": "top",
-  "height": 36,
-  "margin-top": 4,
-  "margin-left": 10,
-  "margin-right": 10,
-  "exclusive": true,
+    "layer": "top",    
+    "position": "top", 
+    "height": 20,      
+    "margin-left": 0,
+    "margin-right": 0,
+    "margin-bottom": 0,
+    "ipc": true,
+    "spacing": 0,     
+    "modules-left": ["custom/launcher", "sway/workspaces", "sway/window"],
+    "modules-center": ["network"],
+    "modules-right": ["custom/updates", "disk", "cpu", "memory", "temperature", "pulseaudio", "group/settings", "battery", "clock", "group/power"],
 
-  "modules-left": ["custom/launcher", "sway/workspaces", "custom/media"],
-  "modules-center": ["clock#date", "clock#time"],
-  "modules-right": ["pulseaudio", "custom/sys", "network", "tray", "custom/power"],
-
-  "custom/media": {
-    "interval": 2,
-    "return-type": "json",
-    "exec": "~/.config/waybar/scripts/media.sh",
-    "on-click": "playerctl play-pause",
-    "on-scroll-up": "playerctl next",
-    "on-scroll-down": "playerctl previous",
-    "tooltip": false
-  },
-
-    "custom/sys": {
-    "interval": 3,
-    "return-type": "json",
-    "exec": "~/.config/waybar/scripts/sysinfo.sh",
-    "on-click": "swaymsg exec \"kitty --override initial_window_state=maximized -e btop\"",
-    "tooltip": false
-  },
-
-  "custom/launcher": {
-    "format": "<span font_family='Font Awesome 6 Brands' size='12pt'>\uf798</span>",
-    "on-click": "wofi --show drun",
-    "tooltip": false
-  },
-
-  "sway/workspaces": {
-    "disable-scroll": true,
-    "all-outputs": true,
-    "format": "{name}",
-    "persistent_workspaces": {}
-  },
-
-  "clock#date": {
-    "format": "<span font_family='Font Awesome 6 Free Regular' size='8pt'>\uf073</span> <span size='small'>{:%a %d %b}</span>",
-    "interval": 10,
-    "tooltip": false
-  },
-
-  "clock#time": {
-    "format": "<span font_family='Font Awesome 6 Free Solid' size='8pt'>\uf017</span> <span weight='bold'>{:%H:%M}</span>",
-    "interval": 1,
-    "tooltip": false
-  },
-
-  "network": {
-    "interval": 3,
-    "format-wifi": "<span font_family='Font Awesome 6 Free Solid' size='9pt'>\uf1eb</span>  {essid}",
-    "format-ethernet": "<span font_family='Font Awesome 6 Free Solid' size='9pt'>\uf796</span>  wired",
-    "format-disconnected": "<span font_family='Font Awesome 6 Free Solid' size='9pt'>\uf1eb</span>  offline",
-    "on-click": "nm-connection-editor",
-    "tooltip": false
-  },
-
-  "pulseaudio": {
-    "format": "<span font_family='Font Awesome 6 Free Solid' size='9pt'>{icon}</span>  {volume}%",
-    "format-muted": "<span font_family='Font Awesome 6 Free Solid' size='9pt'>\uf1f7</span>  muted",
-    "format-icons": {
-      "default": ["\uf027", "\uf028"]
+    "custom/launcher": {
+        "format":"<span size='x-large'></span>",
+        "on-click": "wofi --show drun",
+        "on-click-right": "~/.config/waybar/scripts/change-wall",            
+        "tooltip": true,
+        "tooltip-format": "nwg-drawer"
     },
-    "on-click": "pavucontrol",
-    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
-    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
-    "tooltip": false
-  },
+    "sway/workspaces": {
+        //"disable-scroll": true,
+        "all-outputs": true,
+        "format": "{icon}",
+        "format-icons": {
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "10": "10"
+        }
+    },
+    "sway/window": {
+        "format": "{}",
+        "all-outputs": true, 
+        "max-length": 120,
+        "on-click": "",
+    },
+    "network": {
+        "format-disabled": " Disabled",
+        "format-wifi": " {bandwidthDownBits:>} 󰶡 {bandwidthUpBits:>} 󰶣",
+        "tooltip-format-wifi": "ESSID: {essid}",
+        "format-ethernet": "󰈀 {bandwidthDownBits:>} 󰶡 {bandwidthUpBits:>} 󰶣",
+        "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}",
+        "format-disconnected": " Disconnected",
+        "on-click": "nm-connection-editor",
+        "on-click-right": "nm-applet",
+        "interval": 2
+    },
+    "clock": {
+        "timezone": "Asia/Jakarta",
+        "tooltip-format": " {:%A %m/%d}\n\n<tt><small>{calendar}</small></tt>",
+        "format": "󰅐 {:%H:%M}",
+        "on-click": "",
+        "on-click-right": "",
+        "calendar": {
+            "on-scroll": 1,
+            "format": {
+                "months":     "<span color='#ffead3'><b>{}</b></span>",
+                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+            },
+        },
+        "actions": {
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        },
+    },
+    "custom/updates" : {
+        "format": "󰏕 Updates",
+        "tooltip-format": "Update (dnf)",
+        "on-click": "kitty -e bash -c 'sudo dnf upgrade; read'"
+    },
+    "disk": {
+        "format": " {used} of {total} GiB",
+        "format-alt": " {percentage_used}%",
+        "interval": 5,
+        "path": "/",
+        "on-click-right": ""
+    },
+    "cpu": {
+        "interval": 5,
+        "format": "{usage}% ",
+        "format-alt": "󰻠 {avg_frequency} GHz",
+        "on-click": "", 
+        "on-click-right": "swaymsg exec \"kitty --class btop -e btop\"",
+        "tooltip": true,  
+        "tooltip-format": "CPU",
+    },
+    "memory": {
+        "format": "  {used} of {total} GiB",
+        "format-alt": "  {}%",
+        "interval": 5,
+        "on-click": "swaymsg exec \"kitty --class btop -e btop\"",
+        "on-click-right": "swaymsg exec \"kitty --class btop -e btop\""
+    },
+    "temperature": {
+        "thermal-zone": 2,
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        "format-critical": "{icon} {temperatureC}°C",
+        "format": "{icon} {temperatureC}°C",
+        "format-icons": ["", ""],
+        "on-click": ""
+    },
+    "battery": {
+        "states": {
+        "good": 95,
+        "warning": 30,
+        "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-full": "{icon} {capacity}% ",
+        "format-icons": ["", "", "", "", ""],   
+        "tooltip-format": "{timeTo}",
+        "on-click-right": ""
+    },
+    "battery#bat2": {
+        "bat": "BAT2"
+    },
+    "pulseaudio": {
+        "scroll-step": 1,
+        "format": "{volume}% {icon} ",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}%",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    },
+    "group/settings": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "settings-drawer",
+            "transition-left-to-right": true,
+            "click-to-reveal": true,
+        },
+        "modules": [
+            "custom/settings",
+            "idle_inhibitor",
+            "keyboard-state",
+            "backlight",
+            "tray",
+        ]
+    },
+    "custom/settings": {
+        "format":"",
+        "tooltip-format": "Options"
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": " ",
+            "deactivated": " "
+        },
+        "tooltip-format-activated": "Idle Inhibitor Activated",
+        "tooltip-format-deactivated": "Idle Inhibitor Deactivated"
+    },
+    "keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format": "{name} {icon}",
+        "format-icons": {
+            "locked": "",
+            "unlocked": ""
+        }
+    },
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": ["󰄰", "󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"],
+        "tooltip-format": "Backlight (Scroll): {percent:}%",
+        "on-scroll-down": "brightnessctl -c backlight set 5%-",
+        "on-scroll-up": "brightnessctl -c backlight set +5%"
+    },
+    "bluetooth": {
+        "format": "{icon}",
+        "format-alt": "bluetooth: {status}",
+        "on-click-right": "blueman-manager",
+        "format-icons": {
+            "enabled": "",
+            "disabled": "󰂲"
+        },
+        "tooltip-format": "{}"
+    },
+    "tray": {
+        "icon-size": 14,
+        "spacing":8
+    },
 
-  "tray": {
-    "icon-size": 16,
-    "spacing": 8
-  },
-
-  "custom/power": {
-    "format": "<span font_family='Font Awesome 6 Free Solid' size='11pt'>\uf011</span>",
-    "on-click": "~/.config/sway/powermenu.sh",
-    "tooltip": false
-  }
+    "group/power": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "power-drawer",
+            "transition-left-to-right": true,
+        },
+        "modules": [
+            "custom/power",
+            "custom/reboot",
+            "custom/log-off",
+            "custom/suspend",
+            "custom/lock",
+        ]
+    },
+    "custom/reboot": {
+        "format":"",
+        "on-click": "systemctl reboot",
+        "tooltip-format": "Reboot"
+    },
+    "custom/log-off": {
+        "format":"󰍃",
+        "on-click": "swaymsg exit",
+        "tooltip-format": "Log out"
+    },
+    "custom/suspend": {
+        "format":"󰤄",
+        "on-click": "systemctl suspend",
+        "tooltip-format": "Suspend"
+    },
+    "custom/lock": {
+        "format":"󰌾",
+        "on-click": "gtklock",
+        "on-click-right": "swaylock",
+        "tooltip-format": "Lock"
+    },
+    "custom/power": {
+        "format": "",  
+        "tooltip": true,  
+        "tooltip-format": "Exit",
+        "on-click": "~/.config/waybar/scripts/power-menu",
+        "on-click-right": "pkill waybar && waybar &"
+    } 
 }

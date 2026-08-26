@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Ruta a tu directorio de fondos de pantalla
+WALLPAPERS_DIR="$HOME/Pictures/wallpaper"
+
+# Lista todas las imágenes en el directorio y selecciona una al azar
+IMAGE=$(find "$WALLPAPERS_DIR" -type f | shuf -n 1)
+
+# Cambia el fondo de pantalla usando swaybg
+[ -n "$IMAGE" ] && pkill swaybg; swaybg -i "$IMAGE" -m fill
+

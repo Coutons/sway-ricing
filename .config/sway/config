@@ -33,8 +33,8 @@ exec_always sh -c 'pkill -x swaybg; W=$(grep -m1 "^WALL=" ~/.config/sway/palette
 ### Appearance
 default_border pixel 2
 default_floating_border pixel 2
-gaps inner 8
-gaps outer 4
+gaps inner 0
+gaps outer 0
 
 # Ryoku-style warm window colors
 client.focused          #e2342a #17130f #f3ede5 #e2342a   #e2342a
@@ -247,7 +247,13 @@ exec swayidle -w \
 # GTK apps pakai dark mode
 exec sh -c 'gsettings set color-scheme prefer-dark; gsettings set gtk-theme Catppuccin-Mocha-Standard-Mauve-Dark'
 
+# Auto-tiling (pakai full path, ~/.local/bin belum masuk PATH)
+exec_always ~/.local/bin/autotiling
+
 seat * xcursor_theme Bibata-Modern-Ice 22
 include /etc/sway/config.d/*
 # Personal overrides - SELALU load terakhir, editan di sini menang & tidak akan ketimpa
 include ~/.config/sway/config.d/*.conf
+
+# btop floating window
+for_window [app_id="btop"] floating enable, resize set width 1100 height 760
