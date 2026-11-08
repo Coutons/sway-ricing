@@ -1,56 +1,56 @@
 # Sway Ricing Dotfiles — Fedora 45 Sway
 
-![Desktop](screenshot.png)
+![Desktop](screenshot.jpg)
 
-Dotfiles untuk desktop rice **Fedora 45 (Sway)** — yang sedang digunakan di
-sistem live ini. Tema cyan-glass, bar ramping transparan, dan script helper
-`fedora-*` untuk menu, jaringan, keybinds, dan rotasi wallpaper.
+Dotfiles for a **Fedora 45 (Sway)** desktop rice — synced from the live
+system on this machine. Cyan-glass theme, slim transparent bar, and
+`fedora-*` helper scripts for menu, network, keybinds, and wallpaper rotation.
 
-> Update terakhir: sinkron dari sistem live `/home/josh` pada Fedora 45 Sway
+> Synced from the live system on Fedora 45 Sway
 > (sway 1.12, waybar 0.15.0, fastfetch 2.68.1, Alacritty).
 
 ## Features
 
-- **Sway** (`~/.config/sway/config`) — tiling WM, gaps 2px, cyan window
-  colors, autostart `swaybg` + `waybar` + `mako` + `swayidle`, XWayland untuk
-  aplikasi X11 (Chrome/LMStudio/dll).
-- **Waybar** — top bar ramping (height 28, transparan, rounded pills):
+- **Sway** (`~/.config/sway/config`) — tiling WM, 2px gaps, cyan window
+  colors, autostart `swaybg` + `waybar` + `mako` + `swayidle`, XWayland
+  for X11 apps (Chrome, LMStudio, etc.).
+- **Waybar** — slim top bar (height 28, transparent, rounded pills):
   launcher, workspaces, window title, media (playerctl), clock
-  (Asia/Jakarta), updates (dnf), sysinfo (CPU/RAM/suhu), net
+  (Asia/Jakarta), updates (dnf), sysinfo (CPU/RAM/temp), net
   (`~/.local/bin/fedora-net`), pulseaudio, keybinds, power menu, tray.
-- **Wofi** — launcher `Super+Space` / `Super+d`, style cyan-glass.
-- **Alacritty** — terminal utama (`Super+Return`), opacity 0.85, font
-  Noto Sans Mono 10, shell `fish -C fastfetch`.
-- **Fastfetch** — ringkasan startup cyan (`SYSTEM / DESKTOP / HARDWARE /
-  NETWORK` + modul *OS Age*).
-- **Mako** — notifikasi Wayland.
-- **Fish** — greeting kosong, `path` untuk `~/.opencode/bin`.
-- **Helper `fedora-*`** di `~/.local/bin/`:
+- **Wofi** — launcher `Super+Space` / `Super+d`, cyan-glass style.
+- **Alacritty** — main terminal (`Super+Return`), 0.85 opacity, Noto Sans
+  Mono 10 font, shell `fish -C fastfetch`.
+- **Fastfetch** — cyan startup summary (`SYSTEM / DESKTOP / HARDWARE /
+  NETWORK` + *OS Age* module).
+- **Mako** — Wayland notifications.
+- **Fish** — empty greeting, `path` for `~/.opencode/bin`.
+- **`fedora-*` helpers** in `~/.local/bin/`:
   - `fedora-menu` — command center (Super+Shift+Space)
-  - `fedora-keybinds` — cheat-sheet keybinds (klik ikon keyboard di bar)
-  - `fedora-net` / `fedora-net-menu` — status + menu jaringan
-  - `fedora-rotate` — rotasi wallpaper otomatis (`--daemon/--once/--toggle`)
+  - `fedora-keybinds` — keybind cheat-sheet (click the keyboard icon in the bar)
+  - `fedora-net` / `fedora-net-menu` — network status + menu
+  - `fedora-rotate` — automatic wallpaper rotation (`--daemon/--once/--toggle`)
 - **Wallpaper** — `~/.config/fedora-sway/wallpaper.png` + folder
-  `~/.config/fedora-sway/wallpapers/` (diisi via `FEDORA_WALLPAPER_DIR`).
+  `~/.config/fedora-sway/wallpapers/` (filled via `FEDORA_WALLPAPER_DIR`).
 
 ## Requirements
 
-Di Fedora (pastikan session **Fedora Sway** dipilih di GDM):
+On Fedora (make sure the **Fedora Sway** session is selected in GDM):
 
 ```bash
 sudo dnf install \
   sway waybar alacritty fastfetch btop fish wofi mako swaybg swaylock swayidle \
   pavucontrol playerctl brightnessctl grim slurp wl-clipboard thunar nm-connection-editor \
-  firefox zed 2>/dev/null || true
+  firefox zed
 sudo dnf install jetbrains-mono-fonts noto-sans-fonts fontawesome-fonts
 ```
 
-> Ikon bar mengandalkan karakter Unicode/emoji bawaan (🔊 ⏻ ⌨ dll);
-> font terminal/UI: *Noto Sans Mono* + *Noto Sans*.
+> Bar icons rely on built-in Unicode/emoji (🔊 ⏻ ⌨ etc.);
+> terminal/UI fonts: *Noto Sans Mono* + *Noto Sans*.
 
 ## Install / Restore
 
-Clone repo lalu salin `.config/` dan `.local/` ke home:
+Clone the repo and copy `.config/` and `.local/` into your home:
 
 ```bash
 git clone https://github.com/Coutons/sway-ricing.git ~/dotfiles
@@ -60,7 +60,7 @@ cp -r .local/* ~/.local/
 chmod +x ~/.local/bin/fedora-* ~/.config/waybar/scripts/*
 ```
 
-Atau pakai [GNU stow](https://www.gnu.org/software/stow/):
+Or use [GNU stow](https://www.gnu.org/software/stow/):
 
 ```bash
 git clone https://github.com/Coutons/sway-ricing.git ~/dotfiles
@@ -68,14 +68,14 @@ cd ~/dotfiles
 stow -t ~ .config .local
 ```
 
-Lalu restart sesi (log out/in) atau reload:
+Then restart the session (log out/in) or reload:
 
 ```bash
 pkill -x waybar; waybar &
-swaymsg reload   # dari dalam Sway
+swaymsg reload   # from inside Sway
 ```
 
-### Isi repo
+### Repo layout
 
 ```text
 .config/
@@ -93,17 +93,16 @@ swaymsg reload   # dari dalam Sway
 .local/bin/
   fedora-menu, fedora-keybinds, fedora-net, fedora-net-menu,
   fedora-rotate, power-menu
-wallpapers/            ← koleksi wallpaper lama (opsional)
-screenshot.png
-fastfetch.png
+screenshot.jpg
+fastfetch.jpg
 ```
 
 ## Keybindings
 
-Lihat `.config/sway/config` (`$mod` = Super) dan viewer `fedora-keybinds`.
-Ringkasan singkat:
+See `.config/sway/config` (`$mod` = Super) and the `fedora-keybinds`
+viewer. Quick summary:
 
-| Keys | Aksi |
+| Keys | Action |
 |---|---|
 | `Super+Return` | Terminal (alacritty) |
 | `Super+d` / `Super+Space` | Launcher (wofi) |
@@ -111,35 +110,31 @@ Ringkasan singkat:
 | `Super+t` / `g` / `z` / `n` | Firefox / Chrome / Zed / Files |
 | `Super+q` / `f` / `Shift+f` | Close / fullscreen / floating |
 | `Super+1..0` | Workspace 1..10 |
-| `Super+Shift+w` | Wallpaper berikutnya |
-| `Print` / `Super+Print` | Screenshot penuh / region |
+| `Super+Shift+w` | Next wallpaper |
+| `Print` / `Super+Print` | Full / region screenshot |
 | `XF86Audio*` / `XF86MonBrightness*` | Volume / brightness |
 
 ## Screenshot
 
-```bash
-grim ~/dotfiles/screenshot.png
-cd ~/dotfiles && git add screenshot.png && git commit -m "docs: update screenshot"
-```
+![Desktop](screenshot.jpg)
 
 ## Fastfetch
 
-![Fastfetch](fastfetch.png)
+![Fastfetch](fastfetch.jpg)
 
-Jalankan `fastfetch` di terminal untuk lihat ringkasan saat ini.
-Konfigurasi ada di `.config/fastfetch/config.jsonc`.
+Run `fastfetch` in the terminal to see the current summary.
+Config lives in `.config/fastfetch/config.jsonc`.
 
 ## Notes
 
-Ini **pure dotfiles**. Yang di bawah disengaja **tidak** di-commit karena
-terikat ke mesin / hasil generate:
+This is **pure dotfiles**. The following are intentionally **not**
+committed because they are machine-specific / generated:
 
-- `*.bak.*`, `config.bak.*` — backup lokal Sway/Waybar
-- `~/.config/fish/fish_variables`, `completions/`, `functions/` hasil lokal
-- `~/.config/fedora-sway/wallpapers/` yang kosong (koleksi pribadi tetap di
-  drive `Dataku/wallpaper`)
+- `*.bak.*`, `config.bak.*` — local Sway/Waybar backups
+- `~/.config/fish/fish_variables`, `completions/`, `functions/` — local state
+- `~/.config/fedora-sway/wallpapers/` when empty (private collection stays
+  on the `Dataku/wallpaper` drive)
 
-Jika reinstall dari nol, setup bagian system-level (GRUB `/etc/default/grub`,
-release identity, boot entries `/boot/loader/entries/*.conf`) secara manual —
-lihat `ryoku-sway/README.md` di folder backup lokal untuk dokumentasi restore
-lengkap.
+For a from-scratch reinstall, set up the system-level parts manually
+(GRUB `/etc/default/grub`, release identity, boot entries
+`/boot/loader/entries/*.conf`).
