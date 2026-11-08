@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Keybind cheat-sheet viewer — Fedora Sway Rice - wofi, anchored to top-right
+set -euo pipefail
+
+KEYBINDS=$(cat <<'EOF'
+Apps
+Super+Return          Terminal (alacritty)
+Super+T               Firefox
+Super+G               Google Chrome
+Super+Z               Zed editor
+Super+N               Files (Thunar)
+Super+Space           Launcher (wofi)
+Super+d               Launcher (wofi)
+Super+Shift+Space     Fedora Sway Rice menu (wallpaper, lock, etc.)
+
+Windows and layout
+Super+q               Close window
+Super+f               Fullscreen
+Super+a               Focus parent
+Super+e               Toggle split
+Super+s               Stacking
+Super+w               Tabbed
+Super+b               Horizontal split
+Super+v               Vertical split
+Super+Shift+f         Floating toggle
+Super+Tab             Focus tiled / floating
+Super+r               Resize mode (Esc to exit)
+Super+minus           Scratchpad show
+Super+Shift+minus     Move window to scratchpad
+
+Workspaces
+Super+1..0            Workspace 1..10
+Super+Shift+1..0      Move window to workspace 1..10
+
+System
+Super+Shift+W         Next wallpaper
+Super+Shift+C         Reload Sway config
+Super+Shift+R         Reload Sway (alt)
+
+Screenshots and media
+Print                 Screenshot full
+Super+Print           Screenshot region (slurp)
+XF86AudioMute         Mute
+XF86AudioRaiseVol     Volume +5%
+XF86AudioLowerVol     Volume -5%
+XF86MonBrightnessUp   Brightness +5%
+XF86MonBrightnessDown Brightness -5%
+EOF
+)
+
+printf '%s\n' "$KEYBINDS" | wofi --dmenu --location top_right --width 540 \
+  --yoffset 36 --xoffset -8 \
+  -p "Keybinds" -i --cache-file /dev/null --sort-order=default --lines 33

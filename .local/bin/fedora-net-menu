@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Internet menu — Fedora Sway Rice — anchored to top-right under the bar
+set -euo pipefail
+
+menu() {
+  printf '%s\n' "$@" | wofi --dmenu --location top_right --width 380 \
+    --yoffset 36 --xoffset -8 \
+    -p "Internet" -i --cache-file /dev/null --sort-order=default --lines 12
+}
+
+notify() { command -v notify-send >/dev/null && notify-send -u normal "Internet" "$*"; }
+
+copy_ip() {
+  local ip="${1:-}"
+  [ -z "$ip" ] && ip=$(ip -4 -o addr show 2>/dev/null | sed -n 's/.* inet \([0-9.]*\).*/\1/p' | head -1)
+  if command -v wl-copy >/dev/null 2>&1; then printf '%s' "$ip" | wl-copy; notify "IP copied: $ip"
+  elif command -v xclip >/dev/null 2>&1; then printf '%s' "$ip" | xclip -selection clipboard; notify "IP copied: $ip"
+  else notify "IP: $ip"; fi
+}
+
+IFACE=$(ip -o route get 1.1.1.1 2>/dev/null | sed -n 's/.* dev \([^ ]*\).*/\1/p' | head -1)
+IP4=$(ip -4 -o addr show ${IFACE:-enp4s0} 2>/dev/null | sed -n 's/.* inet \([0-9.]*\).*/\1/p' | head -1)
+GW=$(ip -4 route show default 2>/dev/null | awk '/default/{print $3}' | head -1)
+DNS=$(grep -E '^nameserver' /etc/resolv.conf 2>/dev/null | awk '{print $2}' | paste -sd ', ' -)
+CONN=$(nmcli -t -f ACTIVE,NAME,TYPE,DEVICE connection show --active | head -1 | sed 's/:/ | /g')
+
+choice=$(menu \
+  "Status: ${CONN:-not connected}" \
+  "Connection info (IP/gateway)" \
+  "Copy IP address" \
+  "Test internet (ping 1.1.1.1)" \
+  "DNS servers: ${DNS:-n/a}" \
+  "Open Network Connections" \
+  "Restart NetworkManager" \
+  "Back")
+
+case "$choice" in
+  "Status:"*)
+    notify "Network\n${CONN:-not connected}\n${IFACE:-?} — ${IP4:-?} — gateway ${GW:-?}\nDNS: ${DNS:-n/a}" ;;
+  "Connection info"*)
+    notify "Network\nInterface: ${IFACE:-?}\nIP: ${IP4:-?}\nGateway: ${GW:-?}\nDNS: ${DNS:-n/a}" ;;
+  "Copy IP"*)
+    copy_ip "$IP4" ;;
+  "Test internet"*)
+    if ping -c 2 -W 2 1.1.1.1 >/dev/null 2>&1; then notify "Internet OK (ping 1.1.1.1)"; else notify "Internet unreachable"; fi ;;
+  "DNS servers"*)
+    notify "DNS servers:\n${DNS:-n/a}" ;;
+  "Open Network Connections"*)
+    nm-connection-editor & ;;
+  "Restart NetworkManager"*)
+    alacritty -e bash -c 'sudo systemctl restart NetworkManager; echo Done — press Enter; read' & ;;
+  *) exit 0 ;;
+esac

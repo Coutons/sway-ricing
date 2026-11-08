@@ -1,0 +1,15 @@
+# Backup lokal & file mesin-spesifik — jangan di-commit
+*.bak.*
+*.bak
+*~
+*.swp
+.DS_Store
+
+# Fish state lokal (path absolut + history)
+.config/fish/fish_variables
+.config/fish/fish_history
+.config/fish/completions/
+.config/fish/functions/
+
+# Cache & state rotasi wallpaper (runtime)
+.cache/fedora-sway/

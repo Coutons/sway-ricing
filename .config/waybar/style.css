@@ -1,0 +1,242 @@
+/* Fedora Sway Rice — slim transparent bar (Waybar) */
+
+* {
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Sans Mono", "Noto Sans", sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+}
+
+#waybar {
+    color: #cbd5e1;
+    background-color: rgba(8, 13, 24, 0.22);
+    border: 1px solid rgba(0, 229, 255, 0.10);
+    border-radius: 12px;
+    box-shadow: none;
+    padding: 0 6px;
+}
+
+tooltip {
+    background-color: rgba(8, 13, 24, 0.96);
+    border: 1px solid rgba(0, 229, 255, 0.22);
+    border-radius: 8px;
+}
+
+tooltip label {
+    color: #cbd5e1;
+    font-family: "Noto Sans Mono", "Noto Sans", sans-serif;
+    font-size: 11px;
+    padding: 3px;
+}
+
+/* Launcher */
+#custom-launcher {
+    color: #67e8f9;
+    background-color: rgba(0, 229, 255, 0.08);
+    border: 1px solid rgba(0, 229, 255, 0.22);
+    border-radius: 8px;
+    padding: 1px 9px;
+    margin: 1px;
+    font-weight: 700;
+}
+
+#custom-launcher:hover {
+    color: #ecfeff;
+    background-color: rgba(0, 229, 255, 0.18);
+    border: 1px solid rgba(103, 232, 249, 0.55);
+}
+
+/* Workspaces */
+#workspaces {
+    background: transparent;
+    padding: 0 1px;
+    margin: 0 2px;
+}
+
+#workspaces button {
+    color: #64748b;
+    background: transparent;
+    border-radius: 7px;
+    padding: 1px 7px;
+    margin: 1px;
+    min-width: 16px;
+    font-weight: 600;
+}
+
+#workspaces button:hover {
+    color: #a5f3fc;
+    background-color: rgba(0, 229, 255, 0.08);
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+    color: #67e8f9;
+    background-color: rgba(0, 229, 255, 0.16);
+    border: 1px solid rgba(0, 229, 255, 0.45);
+}
+
+#workspaces button.visible {
+    color: #a5f3fc;
+    background-color: rgba(0, 229, 255, 0.06);
+}
+
+#workspaces button.urgent {
+    color: #111827;
+    background-color: #f59e0b;
+    background-image: none;
+}
+
+#workspaces button.empty {
+    color: #475569;
+}
+
+/* Window title */
+#window {
+    color: #cbd5e1;
+    background: transparent;
+    padding: 0 8px;
+    margin: 0 1px;
+    font-weight: 500;
+}
+
+/* Media */
+#custom-media {
+    color: #5eead4;
+    background: transparent;
+    padding: 0 6px;
+    font-weight: 500;
+}
+
+/* Clock */
+#clock {
+    color: #e2e8f0;
+    background-color: rgba(0, 229, 255, 0.05);
+    border: 1px solid rgba(0, 229, 255, 0.12);
+    border-radius: 8px;
+    padding: 1px 12px;
+    margin: 1px 0;
+    font-weight: 600;
+}
+
+#clock:hover {
+    color: #ecfeff;
+    background-color: rgba(0, 229, 255, 0.10);
+}
+
+/* Right-side status pills */
+#custom-updates,
+#custom-sysinfo,
+#custom-net,
+#network,
+#pulseaudio,
+#custom-keybinds,
+#custom-power {
+    background-color: rgba(15, 23, 42, 0.18);
+    border: 1px solid rgba(148, 163, 184, 0.06);
+    border-radius: 7px;
+    padding: 1px 7px;
+    margin: 1px;
+    color: #94a3b8;
+}
+
+#custom-updates {
+    color: #5eead4;
+}
+
+#custom-sysinfo {
+    color: #67e8f9;
+}
+
+#custom-net,
+#network {
+    color: #22d3ee;
+}
+
+#pulseaudio {
+    color: #a5f3fc;
+}
+
+#custom-keybinds {
+    color: #7dd3fc;
+}
+
+#custom-power {
+    color: #67e8f9;
+    padding: 0 8px;
+    font-size: 13px;
+}
+
+#custom-updates:hover,
+#custom-sysinfo:hover,
+#custom-net:hover,
+#network:hover,
+#pulseaudio:hover,
+#custom-keybinds:hover,
+#custom-power:hover {
+    color: #ecfeff;
+    background-color: rgba(0, 229, 255, 0.14);
+    border: 1px solid rgba(0, 229, 255, 0.25);
+}
+
+/* Tray */
+#tray {
+    background: transparent;
+    padding: 0 4px;
+    margin: 0 1px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    background-color: rgba(0, 229, 255, 0.15);
+    border-radius: 5px;
+}
+
+/* Extra modules */
+#cpu,
+#memory,
+#disk,
+#battery,
+#bluetooth,
+#backlight,
+#idle-inhibitor,
+#custom-settings {
+    color: #94a3b8;
+    padding: 0 5px;
+}
+
+#cpu.warning,
+#memory.warning,
+#battery.warning {
+    color: #fbbf24;
+}
+
+#cpu.critical,
+#memory.critical,
+#battery.critical {
+    color: #fb7185;
+    background-color: rgba(251, 113, 133, 0.12);
+    border-radius: 7px;
+}
+
+#battery.critical:not(.charging) {
+    animation: blink 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes blink {
+    to {
+        color: #0b1220;
+        background-color: #fb7185;
+    }
+}
+
+.settings-drawer {
+    background-color: rgba(8, 13, 24, 0.90);
+}

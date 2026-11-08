@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Status internet untuk waybar — output JSON via python3
+set -euo pipefail
+
+IFACE=$(ip -o route get 1.1.1.1 2>/dev/null | sed -n 's/.* dev \([^ ]*\).*/\1/p' | head -1 || true)
+STATE=$(nmcli -t -f STATE general 2>/dev/null || echo unknown)
+
+if [ -z "${IFACE:-}" ] || [ "$STATE" != "connected" ]; then
+  python3 - <<'PY'
+import json
+print(json.dumps({"text": "<span color='#d9a441'>●</span> offline", "tooltip": "No internet connection", "class": "net-off"}))
+PY
+  exit 0
+fi
+
+IP=$(ip -4 -o addr show "$IFACE" | sed -n 's/.* inet \([0-9.]*\).*/\1/p' | head -1)
+GW=$(ip -4 route show default 2>/dev/null | awk '/default/{print $3}' | head -1)
+SPEED=$(ethtool "$IFACE" 2>/dev/null | awk -F': ' '/Speed:/{print $2}' || true)
+
+python3 - "$IFACE" "$IP" "$GW" "$SPEED" <<'PY'
+import json, sys
+iface, ip, gw, speed = sys.argv[1:5]
+text = "<span color='#9ece6a'>●</span> LAN"
+tip = f"Ethernet\n{iface} — {ip or '?'} — gateway {gw or '?'}" + (f" — {speed}" if speed else "")
+print(json.dumps({"text": text, "tooltip": tip, "class": "net-wired"}))
+PY

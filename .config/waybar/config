@@ -1,0 +1,115 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 28,
+    "exclusive": true,
+    "margin-left": 0,
+    "margin-right": 0,
+    "margin-top": 0,
+    "margin-bottom": 2,
+    "ipc": true,
+    "spacing": 4,
+
+    "modules-left": ["custom/launcher", "sway/workspaces", "sway/window", "custom/media"],
+    "modules-center": ["clock"],
+    "modules-right": ["custom/updates", "custom/sysinfo", "custom/net", "pulseaudio", "custom/keybinds", "custom/power", "tray"],
+
+    "custom/launcher": {
+        "format": "./josh",
+        "on-click": "wofi --show drun",
+        "on-click-right": "~/.config/waybar/scripts/change-wall",
+        "tooltip": true,
+        "tooltip-format": "wofi"
+    },
+
+    "sway/workspaces": {
+        "format": "{value}",
+        "all-outputs": true,
+        "disable-scroll": false
+    },
+
+    "sway/window": {
+        "format": "{}",
+        "max-length": 120,
+        "all-outputs": true
+    },
+
+    "custom/media": {
+        "exec": "~/.config/waybar/scripts/media.sh",
+        "return-type": "json",
+        "interval": 2,
+        "max-length": 60
+    },
+
+    "clock": {
+        "timezone": "Asia/Jakarta",
+        "format": "{:%a %d %b | %H:%M}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode-monday": true,
+            "on-scroll": 1,
+            "format": {
+                "months":     "<span color='#ffead3'><b>{}</b></span>",
+                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+
+    "custom/updates": {
+        "exec": "~/.config/waybar/scripts/update-count",
+        "return-type": "json",
+        "interval": 3600,
+        "tooltip-format": "Paket yang bisa di-upgrade",
+        "on-click": "alacritty -e ~/.config/waybar/scripts/update-system"
+    },
+
+    "custom/sysinfo": {
+        "exec": "~/.config/waybar/scripts/sysinfo.sh",
+        "return-type": "json",
+        "interval": 5,
+        "tooltip-format": "CPU · RAM · suhu",
+        "on-click": "alacritty -e btop"
+    },
+
+    "custom/net": {
+        "exec": "~/.local/bin/fedora-net",
+        "interval": 5,
+        "return-type": "json",
+        "on-click": "~/.local/bin/fedora-net-menu",
+        "tooltip": true
+    },
+
+    "pulseaudio": {
+        "scroll-step": 5,
+        "format": "🔊 {volume}%",
+        "format-muted": "✕ muted",
+        "on-click": "pavucontrol",
+        "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+    },
+
+    "custom/keybinds": {
+        "format": "⌨",
+        "on-click": "~/.local/bin/fedora-keybinds",
+        "tooltip-format": "Keybinds — click to view all shortcuts"
+    },
+
+    "tray": {
+        "icon-size": 14,
+        "spacing": 8
+    },
+
+    "custom/power": {
+        "format": "⏻",
+        "on-click": "~/.config/waybar/scripts/power-menu",
+        "tooltip-format": "Power — click for Lock/Logout/Suspend/Reboot/Power Off"
+    }
+}

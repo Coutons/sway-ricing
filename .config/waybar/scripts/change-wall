@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Ganti wallpaper acak (Wayland, swaybg) — Fedora Sway Rice
+set -euo pipefail
+WALLS=()
+for d in "/mnt/Dataku/wallpaper" "$HOME/.config/fedora-sway/wallpapers" "$HOME/Pictures/wallpapers"; do
+  [ -d "$d" ] && while IFS= read -r -d '' f; do WALLS+=("$f"); done < <(find "$d" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.jxl' \) -print0)
+done
+[ ${#WALLS[@]} -eq 0 ] && for w in "$HOME/.config/fedora-sway/wallpaper.png" "/usr/share/backgrounds/default.jxl" "/usr/share/backgrounds/default-dark.jxl"; do [ -f "$w" ] && WALLS+=("$w"); done
+[ ${#WALLS[@]} -eq 0 ] && { notify-send "Wallpaper" "Tidak ada wallpaper ditemukan" 2>/dev/null || true; exit 1; }
+W="${WALLS[RANDOM % ${#WALLS[@]}]}"
+pkill -x swaybg || true
+swaybg -i "$W" -m fill &

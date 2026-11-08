@@ -1,0 +1,13 @@
+# Mako — notifikasi Fedora Sway Rice (Wayland)
+font=Noto Sans Mono 9
+background-color=#192137ee
+text-color=#dec9ce
+border-color=#475ead
+border-size=2
+border-radius=4
+width=380
+height=200
+default-timeout=6000
+margin=10
+icons=1
+max-icon-size=64

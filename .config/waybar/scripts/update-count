@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Jumlah paket yang bisa di-upgrade — JSON untuk Waybar.
+# Mendukung apt (Mint/Ubuntu/Debian), dnf (Fedora), dan pacman (Arch).
+set -euo pipefail
+
+count=0
+manager=""
+
+if command -v apt-get >/dev/null 2>&1; then
+  manager="apt"
+  count=$(apt list --upgradable 2>/dev/null | tail -n +2 | grep -c . || true)
+elif command -v dnf >/dev/null 2>&1; then
+  manager="dnf"
+  # dnf check-update mengembalikan 100 bila ada update.
+  count=$(dnf -q check-update 2>/dev/null | awk 'NF && $1 !~ /^(Obsoleting|Last|Security)/ { n++ } END { print n + 0 }')
+elif command -v pacman >/dev/null 2>&1; then
+  manager="pacman"
+  if command -v checkupdates >/dev/null 2>&1; then
+    count=$(checkupdates 2>/dev/null | grep -c . || true)
+  else
+    count=$(pacman -Qu 2>/dev/null | grep -c . || true)
+  fi
+fi
+
+case "$count" in
+  ''|*[!0-9]*) count=0 ;;
+esac
+
+if [ "$count" -gt 0 ]; then
+  printf '{"text": "↓ %s", "class": "updates", "tooltip": "%s paket bisa di-upgrade (%s)"}\n' \
+    "$count" "$count" "$manager"
+fi

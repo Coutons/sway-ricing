@@ -1,0 +1,59 @@
+[env]
+TERM = "alacritty"
+
+[window]
+padding = { x = 10, y = 10 }
+decorations = "None"
+startup_mode = "Windowed"
+opacity = 0.85
+dynamic_padding = true
+decorations_theme_variant = "Dark"
+
+[font]
+size = 10.0
+normal = { family = "Noto Sans Mono", style = "Regular" }
+bold = { family = "Noto Sans Mono", style = "Bold" }
+
+[colors.primary]
+background = "#192137"
+foreground = "#dec9ce"
+
+[colors.normal]
+black   = "#22252f"
+red     = "#e2342a"
+green   = "#9ece6a"
+yellow  = "#d9a441"
+blue    = "#5c72ff"
+magenta = "#b97d8a"
+cyan    = "#88c0d0"
+white   = "#dec9ce"
+
+[colors.bright]
+black   = "#3a3f54"
+red     = "#ff6b5a"
+green   = "#b4e88b"
+yellow  = "#f5c25c"
+blue    = "#7d92ff"
+magenta = "#d9a1ac"
+cyan    = "#a8e3eb"
+white   = "#f2ebe3"
+
+[cursor.style]
+shape = "Beam"
+blinking = "On"
+
+[colors.cursor]
+cursor = "#00e5ff"
+text = "#192137"
+
+[colors.selection]
+text = "#06121a"
+background = "#00e5ff"
+
+[mouse]
+hide_when_typing = true
+
+# Alacritty — Fedora Sway Rice ([terminal.shell] untuk 0.14+, tetap jalan di 0.13+).
+[terminal.shell]
+program = "/usr/bin/fish"
+args = ["-C", "fastfetch"]

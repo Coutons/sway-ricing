@@ -1,0 +1,108 @@
+/* Fedora Sway Rice — modern wofi launcher (cyan glass) */
+
+* {
+    font-family: "Noto Sans", "Noto Sans Mono", sans-serif;
+    font-size: 13px;
+}
+
+window {
+    background-color: rgba(8, 13, 24, 0.94);
+    border: 1px solid rgba(0, 229, 255, 0.22);
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.60);
+}
+
+#outer-box,
+#inner-box,
+outer-box,
+inner-box {
+    background: transparent;
+}
+
+#input,
+input {
+    background-color: rgba(15, 23, 42, 0.92);
+    border: 1px solid rgba(0, 229, 255, 0.28);
+    border-radius: 12px;
+    color: #e2e8f0;
+    caret-color: #00e5ff;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    box-shadow: none;
+    font-size: 14px;
+}
+
+#input:focus,
+input:focus {
+    border: 1px solid rgba(0, 229, 255, 0.60);
+    background-color: rgba(15, 23, 42, 1.0);
+}
+
+#prompt,
+prompt {
+    color: #67e8f9;
+    font-weight: 600;
+    padding-right: 10px;
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.30);
+}
+
+#entry,
+entry {
+    padding: 3px 10px;
+    border-radius: 8px;
+    color: #cbd5e1;
+    border: 1px solid transparent;
+}
+
+#entry:hover,
+entry:hover {
+    background-color: rgba(0, 229, 255, 0.07);
+    color: #ecfeff;
+}
+
+#entry:selected,
+entry:selected {
+    background-color: rgba(0, 229, 255, 0.15);
+    border: 1px solid rgba(0, 229, 255, 0.42);
+    color: #ecfeff;
+}
+
+#entry:selected #text,
+#entry:selected text {
+    color: #ecfeff;
+    font-weight: 600;
+}
+
+#img,
+image {
+    margin-right: 10px;
+    min-width: 18px;
+    min-height: 18px;
+}
+
+#text,
+text {
+    color: inherit;
+}
+
+#scroll {
+    background: transparent;
+}
+
+scrollbar {
+    background: transparent;
+    min-width: 6px;
+    margin-left: 6px;
+}
+
+scrollbar slider {
+    background-color: rgba(0, 229, 255, 0.35);
+    border-radius: 3px;
+    min-width: 4px;
+    min-height: 24px;
+}
+
+scrollbar slider:hover {
+    background-color: rgba(0, 229, 255, 0.60);
+}

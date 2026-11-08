@@ -1,0 +1,64 @@
+{
+  "logo": null,
+  "display": {
+    "separator": "  ",
+    "key": { "width": 14 },
+    "color": {
+      "keys": "cyan",
+      "output": "white"
+    }
+  },
+  "modules": [
+    {
+      "type": "command",
+      "key": " ",
+      "text": "printf '\\033[38;2;0;229;255m▌\\033[0m \\033[1;38;2;0;229;255m%s\\033[0m \\033[38;2;100;116;139m@\\033[0m \\033[1;38;2;226;232;240m%s\\033[0m' \"$(whoami)\" \"$(hostname)\""
+    },
+    { "type": "separator", "string": "─", "outputColor": "bright_black", "times": 44 },
+    { "type": "break" },
+
+    { "type": "custom", "key": " ", "format": "\u001b[38;2;0;229;255m▌\u001b[0m\u001b[1;38;2;148;163;184m SYSTEM\u001b[0m" },
+    { "type": "os", "key": "› OS" },
+    { "type": "host", "key": "› Host" },
+    { "type": "board", "key": "› Board" },
+    { "type": "bios", "key": "› BIOS" },
+    { "type": "kernel", "key": "› Kernel" },
+    { "type": "initsystem", "key": "› Init" },
+    { "type": "uptime", "key": "› Uptime" },
+    {
+      "type": "command",
+      "key": "› OS Age",
+      "text": "b=$(stat -c %W /var/log/installer 2>/dev/null || echo 0); [ \"${b:-0}\" -gt 0 ] 2>/dev/null || b=$(stat -c %W /etc/hostname 2>/dev/null || echo 0); [ \"${b:-0}\" -gt 0 ] 2>/dev/null || b=$(stat -c %W / 2>/dev/null || echo 0); if [ \"${b:-0}\" -gt 0 ] 2>/dev/null; then d=$(( ( $(date +%s) - b ) / 86400 )); printf '%s hari (sejak %s)' \"$d\" \"$(date -d @$b '+%d %b %Y')\"; else printf 'tidak diketahui'; fi"
+    },
+    { "type": "packages", "key": "› Packages" },
+    { "type": "shell", "key": "› Shell" },
+    { "type": "terminal", "key": "› Terminal" },
+    { "type": "terminalfont", "key": "› Font Term" },
+    { "type": "break" },
+
+    { "type": "custom", "key": " ", "format": "\u001b[38;2;0;229;255m▌\u001b[0m\u001b[1;38;2;148;163;184m DESKTOP\u001b[0m" },
+    { "type": "display", "key": "› Display" },
+    { "type": "wm", "key": "› WM" },
+    { "type": "theme", "key": "› Theme" },
+    { "type": "icons", "key": "› Icons" },
+    { "type": "font", "key": "› Font UI" },
+    { "type": "cursor", "key": "› Cursor" },
+    { "type": "break" },
+
+    { "type": "custom", "key": " ", "format": "\u001b[38;2;0;229;255m▌\u001b[0m\u001b[1;38;2;148;163;184m HARDWARE\u001b[0m" },
+    { "type": "cpu", "key": "› CPU" },
+    { "type": "gpu", "key": "› GPU" },
+    { "type": "memory", "key": "› Memory" },
+    { "type": "swap", "key": "› Swap" },
+    { "type": "disk", "key": "› Disk" },
+    { "type": "break" },
+
+    { "type": "custom", "key": " ", "format": "\u001b[38;2;0;229;255m▌\u001b[0m\u001b[1;38;2;148;163;184m NETWORK\u001b[0m" },
+    { "type": "localip", "key": "› Local IP" },
+    { "type": "loadavg", "key": "› Load" },
+    { "type": "processes", "key": "› Processes" },
+    { "type": "locale", "key": "› Locale" },
+    { "type": "break" },
+    { "type": "colors", "symbol": "block", "block": { "width": 2 }, "paddingLeft": 2 }
+  ]
+}

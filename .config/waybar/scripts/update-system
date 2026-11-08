@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Update sistem lintas distro: apt (Mint/Ubuntu/Debian), dnf (Fedora), pacman (Arch).
+set -euo pipefail
+
+if command -v apt-get >/dev/null 2>&1; then
+  sudo apt update && sudo apt upgrade
+elif command -v dnf >/dev/null 2>&1; then
+  sudo dnf upgrade --refresh
+elif command -v pacman >/dev/null 2>&1; then
+  sudo pacman -Syu
+else
+  echo "Package manager tidak dikenal."
+fi
+
+echo
+read -rp "Selesai. Tekan Enter untuk menutup..." || true

@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Fedora Sway Rice — command center (wofi)
+set -euo pipefail
+
+menu() {
+  printf '%s\n' "$@" | wofi --dmenu -p "Fedora Sway Rice" -i \
+    --cache-file /dev/null --sort-order=default --lines 12
+}
+
+logout_session() {
+  if [ -n "${SWAYSOCK:-}" ] && command -v swaymsg >/dev/null 2>&1; then
+    if swaymsg exit; then return 0; fi
+  fi
+  if [ -n "${DISPLAY:-}" ] && command -v i3-msg >/dev/null 2>&1; then
+    if i3-msg exit; then return 0; fi
+  fi
+  if [ -n "${XDG_SESSION_ID:-}" ]; then loginctl terminate-session "$XDG_SESSION_ID"; fi
+}
+
+choice=$(menu \
+  'Launcher (Super+Space)' \
+  'Wallpaper next' \
+  'Wallpaper auto on/off' \
+  'Screenshot region' \
+  'Reload Sway' \
+  'Reload Waybar' \
+  'Terminal' \
+  'Files' \
+  'Lock' \
+  'Update system' \
+  'Logout' \
+  'Power off…')
+
+confirm() {
+  [ "$(printf '%s\n' No Yes | wofi --dmenu -p "Yakin?" -i \
+    --cache-file /dev/null --sort-order=default --lines 2)" = "Yes" ]
+}
+
+case "$choice" in
+  "Launcher (Super+Space)") wofi --show drun ;;
+  "Wallpaper next")        ~/.local/bin/fedora-rotate --once ;;
+  "Wallpaper auto on/off")  ~/.local/bin/fedora-rotate --toggle; notify-send "Fedora Sway Rice" "$(~/.local/bin/fedora-rotate --status)" ;;
+  "Screenshot region")      mkdir -p ~/Pictures/screenshots; slurp | grim -g - ~/Pictures/screenshots/$(date +%F_%H%M%S).png ;;
+  "Reload Sway")           swaymsg reload ;;
+  "Reload Waybar")         pkill -x waybar; nohup setsid waybar -c ~/.config/waybar/config -s ~/.config/waybar/style.css >/dev/null 2>&1 </dev/null & ;;
+  "Terminal")              alacritty & ;;
+  "Files")                 thunar & ;;
+  "Lock")                  swaylock -f -c 192137 ;;
+  "Update system")         alacritty -e ~/.config/waybar/scripts/update-system & ;;
+  "Logout")                confirm && logout_session ;;
+  "Power off…")            confirm && systemctl poweroff ;;
+  *) exit 0 ;;
+esac

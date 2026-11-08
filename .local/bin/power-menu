@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Power menu (anchored top-right, tepat di bawah tombol power)
+# Urutan menu sengaja dikunci (cache /dev/null + default sort) supaya
+# pilihan tidak bergeser karena riwayat wofi.
+set -euo pipefail
+
+WOFI_OPTS=(
+  --dmenu
+  --location top_right
+  --width 230
+  --yoffset 36
+  --xoffset -8
+  -i
+  --cache-file /dev/null
+  --sort-order=default
+)
+
+menu() {
+  local prompt="$1" lines="$2"
+  shift 2
+  printf '%s\n' "$@" | wofi "${WOFI_OPTS[@]}" -p "$prompt" --lines "$lines"
+}
+
+confirm() {
+  [ "$(menu "$1" 5 No Yes)" = "Yes" ]
+}
+
+logout_session() {
+  # Logout hanya mengakhiri sesi grafis, tidak pernah mematikan sistem.
+  if [ -n "${SWAYSOCK:-}" ] && command -v swaymsg >/dev/null 2>&1; then
+    if swaymsg exit; then return 0; fi
+  fi
+  if [ -n "${DISPLAY:-}" ] && command -v i3-msg >/dev/null 2>&1; then
+    if i3-msg exit; then return 0; fi
+  fi
+  if [ -n "${XDG_SESSION_ID:-}" ]; then
+    loginctl terminate-session "$XDG_SESSION_ID"
+  fi
+}
+
+chosen=$(menu "Power" 8 Lock Logout Suspend Reboot "Power Off" || true)
+
+case "$chosen" in
+  Lock)        swaylock -f -c 192137 ;;
+  Logout)      logout_session ;;
+  Suspend)     systemctl suspend ;;
+  Reboot)      confirm "Reboot?" && systemctl reboot ;;
+  "Power Off") confirm "Power off?" && systemctl poweroff ;;
+  *) exit 0 ;;
+esac
